@@ -11,7 +11,7 @@ public class Main {
         System.out.println("Execution started.");
 
         Order order = new Order("MEGR01", BikeType.KID, 10, LocalDateTime.now(), 1500, 40000);
-        Stock startStock = new Stock(1000, 5, order);
+        Stock startStock = new Stock(10, 5, order);
         Buffer startBuffer = new Buffer();
         startBuffer.addStock(startStock);
 
@@ -23,7 +23,7 @@ public class Main {
         System.out.println("Finish: " + LocalDateTime.now());
 
         System.out.println(startStock);
-        System.out.println(pipeline.getCutToBending().getStocksInBuffer().get(0));
+        System.out.println(pipeline.getEndBuffer().getStocksInBuffer().get(0));
         System.out.println("Execution finished.");
     }
 }
