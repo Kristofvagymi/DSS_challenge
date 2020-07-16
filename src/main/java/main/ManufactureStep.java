@@ -12,7 +12,7 @@ public class ManufactureStep implements Tickable {
     public ManufactureStep(int numOfMachines, int kidBikeTime, int adultBikeTime, int teenBikeTime,  Buffer sourceBuffer, Buffer destinationBuffer){
         this.numOfMachines = numOfMachines;
         for (int i = 0; i < numOfMachines; i++){
-            machines.add(new Machine(sourceBuffer, destinationBuffer, 0, "", kidBikeTime, teenBikeTime, adultBikeTime));
+            machines.add(new Machine(sourceBuffer, destinationBuffer, 0, null, kidBikeTime, teenBikeTime, adultBikeTime));
         }
     }
 

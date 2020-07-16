@@ -15,7 +15,7 @@ public class Machine implements Tickable {
     private Buffer destinationBuffer;
 
     private int timeLeft = 0;
-    private String orderId = "";
+    private Order order;
 
     private int kidBikeTime;
     private int teenBikeTime;
@@ -27,12 +27,12 @@ public class Machine implements Tickable {
             Stock nextStock = sourceBuffer.getStockWithHighestPrio();
             if(nextStock == null) return;
             else {
-                destinationBuffer.addReadyStock(orderId);
-                orderId = "";
+                destinationBuffer.addReadyStock(order);
+                order = null; //TODO: EZ MI A FASZÉR VAN? EZ VOLT: stockId = "", ezér lett ez nyilván
             }
 
-            orderId = nextStock.getStockId();
-            switch (nextStock.getBikeType()) {
+            order = nextStock.getOrder();
+            switch (nextStock.getOrder().getBikeType()) {
                 case KID:
                     timeLeft = kidBikeTime;
                     break;

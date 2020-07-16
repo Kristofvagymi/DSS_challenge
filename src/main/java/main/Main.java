@@ -7,8 +7,9 @@ import java.time.LocalDateTime;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Execution started.");
-        Stock startStock = new Stock("MEGR01", BikeType.KID, 10, LocalDateTime.now(), 1500, 40000, 10, 5);
-        Stock endStock = new Stock("MEGR01", BikeType.KID, 10, LocalDateTime.now(), 1500, 40000, 0, 5);
+        Order order = new Order("MEGR01", BikeType.KID, 10, LocalDateTime.now(), 1500, 40000);
+        Stock startStock = new Stock(10, 5, order);
+        Stock endStock = new Stock(10, 5, order);
 
         Buffer startBuffer = new Buffer();
         Buffer cutToBending = new Buffer();
