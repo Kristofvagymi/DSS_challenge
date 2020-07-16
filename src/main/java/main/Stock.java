@@ -13,19 +13,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Stock {
-    //Variables from csv
-    private String stockId;
-    private BikeType bikeType;
-    private int totalCount;
-
-    private LocalDateTime deadLine;
-
-    private int profitPerPiece;
-    private int penaltyForDelay;
-
     //Stock size information
     private int count;
 
     //Derived variables
     private int prio;
+
+    private Order order;
 }

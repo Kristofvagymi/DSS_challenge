@@ -15,7 +15,7 @@ public class Machine implements Tickable {
     private Buffer destinationBuffer;
 
     private int timeLeft = 0;
-    private String orderId = "";
+    private Order order;
 
     private int kidBikeTime;
     private int teenBikeTime;
@@ -24,9 +24,8 @@ public class Machine implements Tickable {
     private void setStockWorkInProgress(){
         Stock nextStock = sourceBuffer.getStockWithHighestPrio();
         if(nextStock == null) return;
-        orderId = nextStock.getStockId();
-        orderId = nextStock.getStockId();
-        switch (nextStock.getBikeType()) {
+        order = nextStock.getOrder();
+        switch (order.getBikeType()) {
             case KID:
                 timeLeft = kidBikeTime;
                 break;
@@ -42,11 +41,11 @@ public class Machine implements Tickable {
     @Override
     public void tick() {
         if (timeLeft != 0) {timeLeft--;}
-        else if(timeLeft == 0 && !orderId.equals("")) {
-            destinationBuffer.addReadyStock(orderId);
-            orderId = "";
+        else if(timeLeft == 0 && order != null) {
+            destinationBuffer.addReadyStock(order);
+            order = null;
             setStockWorkInProgress();
-        } else if(timeLeft == 0 && orderId.equals("")) {
+        } else if(timeLeft == 0 && order == null) {
             setStockWorkInProgress();
         }
     }

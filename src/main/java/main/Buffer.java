@@ -22,11 +22,10 @@ public class Buffer {
         return stockWithMaxPrio;
     }
 
-    public void addReadyStock(String stockId) {
-        for (int i = 0; i < stocksInBuffer.size(); i++) {
-            if(stocksInBuffer.get(i).getStockId().equals(stockId)) {
-                Stock arrivedStock = stocksInBuffer.get(i);
-                arrivedStock.setCount(arrivedStock.getCount() + 1);
+    public void addReadyStock(Order order) {
+        for (Stock stock : stocksInBuffer) {
+            if(stock.getOrder().equals(order)){
+                stock.setCount(stock.getCount() + 1);
             }
         }
     }
