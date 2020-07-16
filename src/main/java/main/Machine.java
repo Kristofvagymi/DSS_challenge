@@ -1,7 +1,13 @@
 package main;
 
 import interfaces.Tickable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Machine implements Tickable {
     private Buffer sourceBuffer;
     private Buffer destinationBuffer;
