@@ -4,10 +4,11 @@ import enums.BikeType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
+@ToString
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,8 +19,6 @@ public class Stock {
     private int totalCount;
 
     private LocalDateTime deadLine;
-    //private DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-    //String formattedDate = myDateObj.format(myFormatObj);
 
     private int profitPerPiece;
     private int penaltyForDelay;
@@ -28,4 +27,5 @@ public class Stock {
     private int count;
 
     //Derived variables
+    private int prio;
 }
