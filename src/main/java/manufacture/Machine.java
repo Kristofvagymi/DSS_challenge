@@ -1,10 +1,12 @@
-package main;
+package manufacture;
 
 import interfaces.Tickable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import main.Order;
+import main.Stock;
 
 @ToString
 @Data

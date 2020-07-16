@@ -1,6 +1,8 @@
-package main;
+package manufacture;
 
 import lombok.Data;
+import main.Order;
+import main.Stock;
 
 import java.util.ArrayList;
 import java.util.Comparator;
