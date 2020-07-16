@@ -18,7 +18,7 @@ public class Stock {
     private int totalCount;
 
     private LocalDateTime deadLine;
-    private DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+    //private DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     //String formattedDate = myDateObj.format(myFormatObj);
 
     private int profitPerPiece;
