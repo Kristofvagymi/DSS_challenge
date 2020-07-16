@@ -17,7 +17,7 @@ public class Main {
 
         ManufactureStep cutter = new ManufactureStep(6, 5, 8, 6, startBuffer, cutToBending);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 100; i++) {
             cutter.tick();
         }
         System.out.println(startStock);

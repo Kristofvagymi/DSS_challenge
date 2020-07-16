@@ -1,9 +1,11 @@
 package main;
 
 import interfaces.Tickable;
+import lombok.ToString;
 
 import java.util.ArrayList;
 
+@ToString
 public class ManufactureStep implements Tickable {
 
     private ArrayList<Machine> machines = new ArrayList<>();
