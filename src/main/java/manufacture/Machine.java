@@ -3,7 +3,10 @@ package manufacture;
 import interfaces.Tickable;
 import lombok.*;
 import main.Order;
+import main.SimulatedDate;
 import main.Stock;
+
+import java.time.LocalDateTime;
 
 @ToString
 @Data
@@ -30,6 +33,9 @@ public class Machine implements Tickable {
         if(nextStock == null) return;
         order = nextStock.getOrder();
         priority = nextStock.getPrio();
+        if (order.getStartDate() == null) {
+            order.setStartDate(SimulatedDate.getDate());
+        }
         switch (order.getBikeType()) {
             case GYB:
                 timeLeft = kidBikeTime;

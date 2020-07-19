@@ -17,6 +17,7 @@ public class Main {
         System.out.println("Start: " + LocalDateTime.now());
         for (int i = 0; i < 500; i++) {
             pipeline.tick();
+            SimulatedDate.tick();
         }
         System.out.println("Finish: " + LocalDateTime.now());
 
