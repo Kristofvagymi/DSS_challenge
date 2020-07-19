@@ -17,6 +17,8 @@ public class Main {
 
         Pipeline pipeline = new Pipeline(orders);
         Buffer endBuffer = pipeline.getEndBuffer();
+        String[] worklogHeaders = {"Dátum", "Gép", "Kezdő időpont", "Záró időpont", "Megrendelés szám"};
+        OutputWriter.initWriter("output/worklog.csv", worklogHeaders);
 
         System.out.println("Start: " + LocalDateTime.now());
         while (!endBuffer.isFull()) {
@@ -24,7 +26,10 @@ public class Main {
             pipeline.tick();
             SimulatedDate.tick();
         }
-        OutputWriter.initWriter("output/output.csv");
+        OutputWriter.closeStream();
+
+        String[] outputHeader = {"Megrendelésszám", "Profit összesen", "Levont kötbér", "Munka megkezdése", "Készre jelentés ideje", "Megrendel és eredeti határideje"};
+        OutputWriter.initWriter("output/output.csv", outputHeader);
         createOutputCsv(orders);
         System.out.println("Finish: " + LocalDateTime.now());
 

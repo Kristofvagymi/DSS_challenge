@@ -4,16 +4,21 @@ import main.Order;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class OutputWriter {
     public static FileWriter workLogWriter;
 
-    public static void initWriter(String path){
+    public static void initWriter(String path, String[] headers){
         try {
-            workLogWriter = new FileWriter("output/worklog.csv");
+            workLogWriter = new FileWriter(path);
+            for(int i = 0; i < headers.length - 1; i++){
+                workLogWriter.append(headers[i]);
+                workLogWriter.append(",");
+            }
+            workLogWriter.append(headers[headers.length - 1]);
+            workLogWriter.append("\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -31,9 +36,9 @@ public class OutputWriter {
 
             workLogWriter.append(order.getName());
             workLogWriter.append(",");
-            workLogWriter.append(total_profit+" Ft ");
+            workLogWriter.append(total_profit+" Ft");
             workLogWriter.append(",");
-            workLogWriter.append(loss+" Ft ");
+            workLogWriter.append(loss+" Ft");
             workLogWriter.append(",");
             workLogWriter.append(order.getStartDate().getMonthValue()+ "." +order.getStartDate().getDayOfMonth()+ "." + order.getStartDate().getHour()+":"+order.getStartDate().getMinute());
             workLogWriter.append(",");
