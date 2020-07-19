@@ -28,13 +28,13 @@ public class Machine implements Tickable {
         if(nextStock == null) return;
         order = nextStock.getOrder();
         switch (order.getBikeType()) {
-            case KID:
+            case GYB:
                 timeLeft = kidBikeTime;
                 break;
-            case ADULT:
+            case FB:
                 timeLeft = adultBikeTime;
                 break;
-            case TEEN:
+            case SB:
                 timeLeft = teenBikeTime;
                 break;
         }
