@@ -59,22 +59,22 @@ public class Pipeline implements Tickable {
         buffers.add(paintingToPacking);
 
         fillBufferWithStocks(endBuffer);
-        packing = new ManufactureStep(3, 10, 15, 12, paintingToPacking, endBuffer, null);
+        packing = new ManufactureStep("Csomagoló", 3, 10, 15, 12, paintingToPacking, endBuffer, null);
 
         fillBufferWithStocks(paintingToPacking);
-        painting = new ManufactureStep(3, 12, 20, 15, testingToPainting, paintingToPacking, packing);
+        painting = new ManufactureStep("Festő", 3, 12, 20, 15, testingToPainting, paintingToPacking, packing);
 
         fillBufferWithStocks(testingToPainting);
-        testing = new ManufactureStep(3, 5, 5, 5, weldingToTesting, testingToPainting, painting);
+        testing = new ManufactureStep("Tesztelő", 3, 5, 5, 5, weldingToTesting, testingToPainting, painting);
 
         fillBufferWithStocks(weldingToTesting);
-        welding = new ManufactureStep(3, 8, 12, 10, bendingToWelding, weldingToTesting, testing);
+        welding = new ManufactureStep("Hegesztő", 3, 8, 12, 10, bendingToWelding, weldingToTesting, testing);
 
         fillBufferWithStocks(bendingToWelding);
-        bending = new ManufactureStep(2, 10, 16, 15, cutToBendingBuffer, bendingToWelding, welding);
+        bending = new ManufactureStep("Hajlító", 2, 10, 16, 15, cutToBendingBuffer, bendingToWelding, welding);
 
         fillBufferWithStocks(cutToBendingBuffer);
-        cutter = new ManufactureStep(6, 5, 8, 6, startBuffer, cutToBendingBuffer, bending);
+        cutter = new ManufactureStep("Vágó",6, 5, 8, 6, startBuffer, cutToBendingBuffer, bending);
     }
 
     @Override

@@ -14,11 +14,11 @@ public class ManufactureStep implements Tickable {
     private int numOfMachines;
     private ManufactureStep nextStep;
 
-    public ManufactureStep(int numOfMachines, int kidBikeTime, int adultBikeTime, int teenBikeTime, Buffer sourceBuffer, Buffer destinationBuffer, ManufactureStep nextStep){
+    public ManufactureStep(String name, int numOfMachines, int kidBikeTime, int adultBikeTime, int teenBikeTime, Buffer sourceBuffer, Buffer destinationBuffer, ManufactureStep nextStep){
         this.nextStep = nextStep;
         this.numOfMachines = numOfMachines;
         for (int i = 0; i < numOfMachines; i++){
-            machines.add(new Machine(sourceBuffer, destinationBuffer, kidBikeTime, teenBikeTime, adultBikeTime));
+            machines.add(new Machine(sourceBuffer, destinationBuffer, kidBikeTime, teenBikeTime, adultBikeTime, name + "-" + (i+1)));
         }
     }
 

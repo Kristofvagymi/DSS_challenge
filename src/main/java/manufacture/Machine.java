@@ -3,6 +3,7 @@ package manufacture;
 import interfaces.Tickable;
 import lombok.*;
 import main.Order;
+import main.OutputWriter;
 import main.SimulatedDate;
 import main.Stock;
 
@@ -20,6 +21,7 @@ public class Machine implements Tickable {
     private int timeLeft = 0;
     private Order order;
     private int priority = 0;
+    private LocalDateTime started = SimulatedDate.getDate();
 
     @NonNull
     private int kidBikeTime;
@@ -27,10 +29,13 @@ public class Machine implements Tickable {
     private int teenBikeTime;
     @NonNull
     private int adultBikeTime;
+    @NonNull
+    private String name;
 
     private void setStockWorkInProgress(){
         Stock nextStock = sourceBuffer.getStockWithHighestPrio();
         if(nextStock == null) return;
+
         order = nextStock.getOrder();
         priority = nextStock.getPrio();
         if (order.getStartDate() == null) {
@@ -54,11 +59,16 @@ public class Machine implements Tickable {
         if (timeLeft != 0) {
             timeLeft--;
         } else if (destinationBuffer.hasCapacity()) {
+            Order lastOrder = order;
             if(order != null) {
                 destinationBuffer.addReadyStock(order);
                 order = null;
             }
             setStockWorkInProgress();
+            if(order != null && lastOrder != null && order != lastOrder) {
+                OutputWriter.logWork(name, lastOrder.getName(), started, SimulatedDate.getDate());
+                started = SimulatedDate.getDate();
+            }
         }
     }
 
