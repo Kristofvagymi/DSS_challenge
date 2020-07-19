@@ -1,5 +1,6 @@
 package main;
 
+import io_handling.AppProperties;
 import io_handling.OrderReader;
 import io_handling.OutputWriter;
 import manufacture.Buffer;
@@ -11,15 +12,16 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         System.out.println("Execution started.");
+        AppProperties.loadProperties();
 
         OrderReader orderReader = new OrderReader();
-        List<Order> orders = orderReader.readOrders("input/example.csv", ",");
+        List<Order> orders = orderReader.readOrders(AppProperties.getOrdersPath(), ",");
 
         Pipeline pipeline = new Pipeline(orders);
         Buffer endBuffer = pipeline.getEndBuffer();
 
         String[] worklogHeaders = {"Dátum", "Gép", "Kezdő időpont", "Záró időpont", "Megrendelés szám"};
-        OutputWriter.initWriter("output/worklog.csv", worklogHeaders);
+        OutputWriter.initWriter(AppProperties.getWorkLogPath(), worklogHeaders);
 
         while (!endBuffer.isFull()) {
             pipeline.calculatePriorities();
@@ -31,7 +33,7 @@ public class Main {
 
         // Write output csv
         String[] outputHeader = {"Megrendelésszám", "Profit összesen", "Levont kötbér", "Munka megkezdése", "Készre jelentés ideje", "Megrendel és eredeti határideje"};
-        OutputWriter.initWriter("output/output.csv", outputHeader);
+        OutputWriter.initWriter(AppProperties.getOrderResultPath(), outputHeader);
         createOutputCsv(orders);
         OutputWriter.closeStream();
 

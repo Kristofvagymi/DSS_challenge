@@ -23,7 +23,6 @@ public class OrderReader{
         String line = "";
 
         try {
-
             br = new BufferedReader(new FileReader(path));
             while ((line = br.readLine()) != null) {
                 String[] orderDetails = line.split(cvsSplitBy);
