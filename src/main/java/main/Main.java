@@ -15,7 +15,7 @@ public class Main {
         Pipeline pipeline = new Pipeline(orders);
 
         System.out.println("Start: " + LocalDateTime.now());
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < 500; i++) {
             pipeline.tick();
         }
         System.out.println("Finish: " + LocalDateTime.now());

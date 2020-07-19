@@ -1,32 +1,35 @@
 package manufacture;
 
 import interfaces.Tickable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import main.Order;
 import main.Stock;
 
 @ToString
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Machine implements Tickable {
+    @NonNull
     private Buffer sourceBuffer;
+    @NonNull
     private Buffer destinationBuffer;
 
     private int timeLeft = 0;
     private Order order;
+    private int priority = 0;
 
+    @NonNull
     private int kidBikeTime;
+    @NonNull
     private int teenBikeTime;
+    @NonNull
     private int adultBikeTime;
 
     private void setStockWorkInProgress(){
         Stock nextStock = sourceBuffer.getStockWithHighestPrio();
         if(nextStock == null) return;
         order = nextStock.getOrder();
+        priority = nextStock.getPrio();
         switch (order.getBikeType()) {
             case GYB:
                 timeLeft = kidBikeTime;
@@ -42,13 +45,16 @@ public class Machine implements Tickable {
     }
     @Override
     public void tick() {
-        if (timeLeft != 0) {timeLeft--;}
-        else if(timeLeft == 0 && order != null) {
-            destinationBuffer.addReadyStock(order);
-            order = null;
-            setStockWorkInProgress();
-        } else if(timeLeft == 0 && order == null) {
+        if (timeLeft != 0) {
+            timeLeft--;
+        } else if (destinationBuffer.hasCapacity()) {
+            if(order != null) {
+                destinationBuffer.addReadyStock(order);
+                order = null;
+            }
             setStockWorkInProgress();
         }
     }
+
+    public boolean isFree(){return (order == null);}
 }

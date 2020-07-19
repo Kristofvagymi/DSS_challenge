@@ -10,6 +10,11 @@ import java.util.Comparator;
 @Data
 public class Buffer {
     private ArrayList<Stock> stocksInBuffer = new ArrayList<>();
+    private ManufactureStep nextStep;
+
+    public Buffer(ManufactureStep nextStep) {
+        this.nextStep = nextStep;
+    }
 
     public void addStock(Stock newStock) {
         stocksInBuffer.add(newStock);
@@ -30,5 +35,18 @@ public class Buffer {
                 stock.setCount(stock.getCount() + 1);
             }
         }
+    }
+
+    public int stockSize() {
+        int sizeCounter = 0;
+        for (Stock stock : stocksInBuffer) {
+            sizeCounter += stock.getCount();
+        }
+        return sizeCounter;
+    }
+
+    public boolean hasCapacity() {
+        if(nextStep == null) return true;
+        return (nextStep.getFreeMachines() > stockSize());
     }
 }
