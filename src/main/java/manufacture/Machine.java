@@ -21,7 +21,7 @@ public class Machine implements Tickable {
     private int timeLeft = 0;
     private Order order;
     private int priority = 0;
-    private LocalDateTime started = SimulatedDate.getDate();
+    private LocalDateTime started;
 
     @NonNull
     private int kidBikeTime;
@@ -36,6 +36,7 @@ public class Machine implements Tickable {
         Stock nextStock = sourceBuffer.getStockWithHighestPrio();
         if(nextStock == null) return;
 
+        started = SimulatedDate.getDate();
         order = nextStock.getOrder();
         priority = nextStock.getPrio();
         if (order.getStartDate() == null) {
@@ -59,16 +60,12 @@ public class Machine implements Tickable {
         if (timeLeft != 0) {
             timeLeft--;
         } else if (destinationBuffer.hasCapacity()) {
-            Order lastOrder = order;
             if(order != null) {
                 destinationBuffer.addReadyStock(order);
+                OutputWriter.logWork(name, order.getName(), started, SimulatedDate.getDate());
                 order = null;
             }
             setStockWorkInProgress();
-            if(order != null && lastOrder != null && order != lastOrder) {
-                OutputWriter.logWork(name, lastOrder.getName(), started, SimulatedDate.getDate());
-                started = SimulatedDate.getDate();
-            }
         }
     }
 
