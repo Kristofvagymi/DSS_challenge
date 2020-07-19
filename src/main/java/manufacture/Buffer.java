@@ -8,6 +8,8 @@ import main.Stock;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -73,8 +75,11 @@ public class Buffer {
             if (stock.getCount() != stock.getOrder().getTotalCount()) {
                 return false;
             } else {
-                if(stock.getOrder().getEndDate() == null)
+                if(stock.getOrder().getEndDate() == null) {
+                    Logger LOGGER = Logger.getLogger(Machine.class.getName());
+                    LOGGER.log(Level.INFO, "Process finished successfully: " + stock.getOrder().getName());
                     stock.getOrder().setEndDate(SimulatedDate.getDate());
+                }
             }
         }
         return true;

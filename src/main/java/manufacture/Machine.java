@@ -8,6 +8,8 @@ import main.SimulatedDate;
 import main.Stock;
 
 import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Machine class represents a machine in the factory. Machines are connected via buffers. They prefer jobs with high priority.
@@ -36,6 +38,8 @@ public class Machine implements Tickable {
     @NonNull
     private String name;
 
+    private final static Logger LOGGER = Logger.getLogger(Machine.class.getName());
+
     private void setStockWorkInProgress(){
         //Find the most important job from the source buffer.
         Stock nextStock = sourceBuffer.getStockWithHighestPrio();
@@ -50,6 +54,7 @@ public class Machine implements Tickable {
         // If this is the first appearance of a job saves start time.
         if (order.getStartDate() == null) {
             order.setStartDate(SimulatedDate.getDate());
+            LOGGER.log(Level.INFO, "Started processing order: "+order.getName());
         }
 
         // Set the remaining time

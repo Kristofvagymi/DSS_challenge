@@ -7,6 +7,8 @@ import main.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Pipeline implements Tickable {
 
@@ -34,8 +36,11 @@ public class Pipeline implements Tickable {
             buffer.addStock(stock);
         }
     }
+    private final static Logger LOGGER = Logger.getLogger(Pipeline.class.getName());
 
     public Pipeline(List<Order> orders){
+        LOGGER.log(Level.INFO, "Building the pipeline.");
+
         this.orders = orders;
 
         buffers = new ArrayList<>();
@@ -78,6 +83,8 @@ public class Pipeline implements Tickable {
 
         fillBufferWithStocks(cutToBendingBuffer);
         cutter = new ManufactureStep("Vágó",6, 5, 8, 6, startBuffer, cutToBendingBuffer, bending);
+
+        LOGGER.log(Level.INFO, "Pipeline building finished successfully.");
     }
 
     @Override
