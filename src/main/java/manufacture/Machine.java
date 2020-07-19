@@ -7,6 +7,8 @@ import main.OutputWriter;
 import main.SimulatedDate;
 import main.Stock;
 
+import java.time.LocalDateTime;
+
 /**
  * Machine class represents a machine in the factory. Machines are connected via buffers. They prefer jobs with high priority.
  */

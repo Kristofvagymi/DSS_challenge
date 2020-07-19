@@ -36,6 +36,7 @@ public class Buffer {
     //Get the stored stocks wtih the highest prioriies
     public Stock getStockWithHighestPrio() {
         List<Stock> notEmptyStocks = stocksInBuffer.stream().filter(p -> p.getCount() > 0).collect(Collectors.toList());
+        if(notEmptyStocks.isEmpty()) return null;
         Stock stockWithMaxPrio = notEmptyStocks.stream().max(Comparator.comparing(Stock::getPrio)).get();
         if(stockWithMaxPrio.getCount() == 0){
             return null;
