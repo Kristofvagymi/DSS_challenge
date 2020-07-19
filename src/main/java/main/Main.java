@@ -26,6 +26,7 @@ public class Main {
 
         System.out.println(pipeline.getStartBuffer().getStocksInBuffer().get(0));
         System.out.println(pipeline.getEndBuffer().getStocksInBuffer().get(0));
+        OutputWriter.closeStream();
         System.out.println("Execution finished.");
     }
 }
