@@ -107,6 +107,18 @@ public class Pipeline implements Tickable {
 
              prio += Math.max(100 - stocks.indexOf(stock) * 10, 0);
 
+            switch (stock.getOrder().getBikeType()) {
+                case GYB:
+                    prio += 40;
+                    break;
+                case FB:
+                    prio += 15;
+                    break;
+                case SB:
+                    prio += 25;
+                    break;
+            }
+
             if(stock.getOrder().getStartDate() != null) {
                 long minStartNow = ChronoUnit.MINUTES.between(stock.getOrder().getStartDate(), SimulatedDate.getDate());
                 long minStartEnd = ChronoUnit.MINUTES.between(stock.getOrder().getStartDate(), stock.getOrder().getDeadLine());
