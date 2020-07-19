@@ -10,19 +10,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderReader {
-    private String path;
+public class OrderReader{
 
-    public OrderReader(String path) {
-        this.path = path;
-    }
-
-    public List<Order> readOrders(){
+    public List<Order> readOrders(String path, String cvsSplitBy){
         List<Order> orders = new ArrayList<>();
 
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ",";
 
         try {
 

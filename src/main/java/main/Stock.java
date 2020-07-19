@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Stock {
+    //Type of the stock
+    private Order order;
+
     //Stock size information
     private int count;
 
     //Derived variables
     private int prio;
-
-    private Order order;
 }

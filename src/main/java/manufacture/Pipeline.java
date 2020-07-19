@@ -5,9 +5,12 @@ import lombok.Getter;
 import main.Order;
 import main.Stock;
 
+import java.util.List;
+
 @Getter
 public class Pipeline implements Tickable {
 
+    private Buffer startBuffer = new Buffer();
     private Buffer cutToBendingBuffer = new Buffer();
     private Buffer bendingToWelding = new Buffer();
     private Buffer weldingToTesting = new Buffer();
@@ -22,29 +25,39 @@ public class Pipeline implements Tickable {
     private ManufactureStep painting;
     private ManufactureStep packing;
 
-    public Pipeline(Buffer startBuffer, Order order){
-        Stock cutToBendStock = new Stock(0, 5, order);
-        cutToBendingBuffer.addStock(cutToBendStock);
+    List<Order> orders;
+
+    private void fillBufferWithStocks(Buffer buffer) {
+        for(Order order : orders){
+            Stock stock = new Stock(order, 0, 0);
+            buffer.addStock(stock);
+        }
+    }
+
+    public Pipeline(List<Order> orders){
+        this.orders = orders;
+
+        for(Order order : orders){
+            Stock stock = new Stock(order, order.getTotalCount(), 0);
+            startBuffer.addStock(stock);
+        }
+
+        fillBufferWithStocks(cutToBendingBuffer);
         cutter = new ManufactureStep(6, 5, 8, 6, startBuffer, cutToBendingBuffer);
 
-        Stock benToWeldStock = new Stock(0, 5, order);
-        bendingToWelding.addStock(benToWeldStock);
+        fillBufferWithStocks(bendingToWelding);
         bending = new ManufactureStep(2, 10, 16, 15, cutToBendingBuffer, bendingToWelding);
 
-        Stock weldingToTestingStock = new Stock(0, 5, order);
-        weldingToTesting.addStock(weldingToTestingStock);
+        fillBufferWithStocks(weldingToTesting);
         welding = new ManufactureStep(3, 8, 12, 10, bendingToWelding, weldingToTesting);
 
-        Stock testingToPaintingStock = new Stock(0, 5, order);
-        testingToPainting.addStock(testingToPaintingStock);
+        fillBufferWithStocks(testingToPainting);
         testing = new ManufactureStep(3, 5, 5, 5, weldingToTesting, testingToPainting);
 
-        Stock paintingToPackingStock = new Stock(0, 5, order);
-        paintingToPacking.addStock(paintingToPackingStock);
+        fillBufferWithStocks(paintingToPacking);
         painting = new ManufactureStep(3, 12, 20, 15, testingToPainting, paintingToPacking);
 
-        Stock endStock = new Stock(0, 5, order);
-        endBuffer.addStock(endStock);
+        fillBufferWithStocks(endBuffer);
         packing = new ManufactureStep(3, 10, 15, 12, paintingToPacking, endBuffer);
     }
 
