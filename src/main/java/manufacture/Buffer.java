@@ -49,4 +49,16 @@ public class Buffer {
         if(nextStep == null) return true;
         return (nextStep.getFreeMachines() > stockSize());
     }
+
+    public boolean isFull(){
+        int fullcount = 0;
+        for (Stock stock : stocksInBuffer) {
+            fullcount += stock.getCount();
+            if (stock.getCount() != stock.getOrder().getTotalCount()) {
+                System.out.println(fullcount);
+                return false;
+            }
+        }
+        return true;
+    }
 }

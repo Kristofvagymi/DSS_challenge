@@ -1,5 +1,6 @@
 package main;
 
+import manufacture.Buffer;
 import manufacture.Pipeline;
 
 import java.time.LocalDateTime;
@@ -13,12 +14,16 @@ public class Main {
         List<Order> orders = orderReader.readOrders("input/example.csv", ",");
 
         Pipeline pipeline = new Pipeline(orders);
+        Buffer endBuffer = pipeline.getEndBuffer();
+        System.out.println(endBuffer.getStocksInBuffer());
+
 
         System.out.println("Start: " + LocalDateTime.now());
-        for (int i = 0; i < 500; i++) {
+        /*while (!endBuffer.isFull()) {
+            pipeline.calculatePriorities();
             pipeline.tick();
             SimulatedDate.tick();
-        }
+        }*/
         System.out.println("Finish: " + LocalDateTime.now());
 
         System.out.println(pipeline.getStartBuffer().getStocksInBuffer().get(0));

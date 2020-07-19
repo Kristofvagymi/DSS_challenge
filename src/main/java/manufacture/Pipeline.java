@@ -5,9 +5,9 @@ import lombok.Getter;
 import main.Order;
 import main.Stock;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
 public class Pipeline implements Tickable {
 
     private ManufactureStep cutter;
@@ -17,15 +17,19 @@ public class Pipeline implements Tickable {
     private ManufactureStep painting;
     private ManufactureStep packing;
 
+    @Getter
     private Buffer startBuffer = new Buffer(cutter);
     private Buffer cutToBendingBuffer = new Buffer(bending);
     private Buffer bendingToWelding = new Buffer(welding);
     private Buffer weldingToTesting = new Buffer(testing);
     private Buffer testingToPainting = new Buffer(painting);
     private Buffer paintingToPacking = new Buffer(packing);
+    @Getter
     private Buffer endBuffer = new Buffer(null);
 
     private List<Order> orders;
+
+    private List<Buffer> buffers;
 
     private void fillBufferWithStocks(Buffer buffer) {
         for(Order order : orders){
@@ -36,6 +40,8 @@ public class Pipeline implements Tickable {
 
     public Pipeline(List<Order> orders){
         this.orders = orders;
+
+        buffers = new ArrayList<>();
 
         for(Order order : orders){
             Stock stock = new Stock(order, order.getTotalCount(), 0);
@@ -59,10 +65,36 @@ public class Pipeline implements Tickable {
 
         fillBufferWithStocks(cutToBendingBuffer);
         cutter = new ManufactureStep(6, 5, 8, 6, startBuffer, cutToBendingBuffer, bending);
+
+        startBuffer = new Buffer(cutter);
+        cutToBendingBuffer = new Buffer(bending);
+        bendingToWelding = new Buffer(welding);
+        weldingToTesting = new Buffer(testing);
+        testingToPainting = new Buffer(painting);
+        paintingToPacking = new Buffer(packing);
+        buffers.add(startBuffer);
+        buffers.add(cutToBendingBuffer);
+        buffers.add(bendingToWelding);
+        buffers.add(weldingToTesting);
+        buffers.add(testingToPainting);
+        buffers.add(paintingToPacking);
     }
 
     @Override
     public void tick() {
         cutter.tick();
+    }
+
+    private void calculatePriorityByBuffer(Buffer buffer) {
+        for (Stock stock : buffer.getStocksInBuffer()){
+            if(stock.getCount() > 0) stock.setPrio(1);
+            else stock.setPrio(0);
+        }
+    }
+
+    public void calculatePriorities() {
+        for (Buffer buffer : buffers) {
+            calculatePriorityByBuffer(buffer);
+        }
     }
 }

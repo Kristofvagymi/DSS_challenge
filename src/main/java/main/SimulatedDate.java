@@ -1,7 +1,5 @@
 package main;
 
-import interfaces.Tickable;
-
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -14,12 +12,11 @@ public class SimulatedDate {
     }
 
     public static void tick() {
-        dateTime = dateTime.plusSeconds(1);
+        dateTime = dateTime.plusMinutes(1);
         if (dateTime.getHour() == 22){
-            int year = dateTime.getYear();
-            Month month = dateTime.getMonth();
-            int day = dateTime.getDayOfMonth();
-            dateTime = LocalDateTime.of(year, month, day+1, 6, 0, 0);
+            System.out.println("New day: " + dateTime.getDayOfYear());
+            dateTime = dateTime.plusDays(1);
+            dateTime = dateTime.minusHours(16);
         }
     }
 }
