@@ -8,6 +8,9 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+/**
+ * This class stores the orders.(Lines from the input csv)
+ */
 @Data
 @RequiredArgsConstructor
 @ToString

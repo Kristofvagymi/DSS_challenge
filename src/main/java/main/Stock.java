@@ -1,13 +1,14 @@
 package main;
 
-import enums.BikeType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-
+/**
+ * This class stores a given sized stock from an order.
+ * And has a priority which is updated in every iteration.
+ */
 @ToString
 @Data
 @NoArgsConstructor

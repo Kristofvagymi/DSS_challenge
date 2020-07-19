@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Collects the same type of machines.
+ */
 @ToString
 public class ManufactureStep implements Tickable {
 
@@ -24,9 +27,11 @@ public class ManufactureStep implements Tickable {
 
     @Override
     public void tick() {
+        // Orders the machines by how important is what they are doing.
         Collections.sort(machines, Comparator.comparingInt(Machine::getPriority));
 
         for (int i = 0; i < numOfMachines; i++){
+            // Tick every machine.
             machines.get(i).tick();
         }
         if(nextStep != null) {

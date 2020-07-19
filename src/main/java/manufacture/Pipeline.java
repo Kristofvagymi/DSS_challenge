@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Pipeline implements Tickable {
 
+    // Manufacture steps in the factory
     private ManufactureStep cutter;
     private ManufactureStep bending;
     private ManufactureStep welding;
@@ -17,10 +18,11 @@ public class Pipeline implements Tickable {
     private ManufactureStep painting;
     private ManufactureStep packing;
 
+    // Start and end buffers
     @Getter
     private Buffer startBuffer;
     @Getter
-    private Buffer endBuffer = new Buffer(null);
+    private Buffer endBuffer;
 
     private List<Order> orders;
 
@@ -38,6 +40,7 @@ public class Pipeline implements Tickable {
 
         buffers = new ArrayList<>();
 
+        // Init buffers.
         startBuffer = new Buffer(cutter);
         Buffer cutToBendingBuffer = new Buffer(bending);
         Buffer bendingToWelding = new Buffer(welding);
@@ -89,6 +92,7 @@ public class Pipeline implements Tickable {
         }
     }
 
+    // Update priorities
     public void calculatePriorities() {
         for (Buffer buffer : buffers) {
             calculatePriorityByBuffer(buffer);

@@ -16,7 +16,6 @@ public class Main {
         Pipeline pipeline = new Pipeline(orders);
         Buffer endBuffer = pipeline.getEndBuffer();
 
-
         System.out.println("Start: " + LocalDateTime.now());
         while (!endBuffer.isFull()) {
             pipeline.calculatePriorities();

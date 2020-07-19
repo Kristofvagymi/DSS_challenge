@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class reads the input csv and create order object.
+ */
 public class OrderReader{
 
     public List<Order> readOrders(String path, String cvsSplitBy){
