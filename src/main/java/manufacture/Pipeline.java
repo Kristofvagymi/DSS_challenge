@@ -3,9 +3,14 @@ package manufacture;
 import interfaces.Tickable;
 import lombok.Getter;
 import main.Order;
+import main.SimulatedDate;
 import main.Stock;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,9 +98,24 @@ public class Pipeline implements Tickable {
     }
 
     private void calculatePriorityByBuffer(Buffer buffer) {
+        List<Stock> stocks = buffer.getStocksInBuffer();
+        Collections.sort(stocks, Comparator.comparing(x -> x.getOrder().getDeadLine()));
+
+        // Calculating new priority values
         for (Stock stock : buffer.getStocksInBuffer()){
-            if(stock.getCount() > 0) stock.setPrio(1);
-            else stock.setPrio(0);
+            double prio = 0;
+
+             prio += Math.max(100 - stocks.indexOf(stock) * 10, 0);
+
+            if(stock.getOrder().getStartDate() != null) {
+                long minStartNow = ChronoUnit.MINUTES.between(stock.getOrder().getStartDate(), SimulatedDate.getDate());
+                long minStartEnd = ChronoUnit.MINUTES.between(stock.getOrder().getStartDate(), stock.getOrder().getDeadLine());
+                prio += (double) minStartNow / minStartEnd * 110;
+            }
+
+            prio += stock.getOrder().getPenaltyForDelay() * 0.001;
+
+            stock.setPrio((int) prio);
         }
     }
 
