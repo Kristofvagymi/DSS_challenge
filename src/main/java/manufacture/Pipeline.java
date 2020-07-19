@@ -18,12 +18,7 @@ public class Pipeline implements Tickable {
     private ManufactureStep packing;
 
     @Getter
-    private Buffer startBuffer = new Buffer(cutter);
-    private Buffer cutToBendingBuffer = new Buffer(bending);
-    private Buffer bendingToWelding = new Buffer(welding);
-    private Buffer weldingToTesting = new Buffer(testing);
-    private Buffer testingToPainting = new Buffer(painting);
-    private Buffer paintingToPacking = new Buffer(packing);
+    private Buffer startBuffer;
     @Getter
     private Buffer endBuffer = new Buffer(null);
 
@@ -43,10 +38,25 @@ public class Pipeline implements Tickable {
 
         buffers = new ArrayList<>();
 
+        startBuffer = new Buffer(cutter);
+        Buffer cutToBendingBuffer = new Buffer(bending);
+        Buffer bendingToWelding = new Buffer(welding);
+        Buffer weldingToTesting = new Buffer(testing);
+        Buffer testingToPainting = new Buffer(painting);
+        Buffer paintingToPacking = new Buffer(packing);
+        endBuffer = new Buffer(null);
+
         for(Order order : orders){
             Stock stock = new Stock(order, order.getTotalCount(), 0);
             startBuffer.addStock(stock);
         }
+
+        buffers.add(startBuffer);
+        buffers.add(cutToBendingBuffer);
+        buffers.add(bendingToWelding);
+        buffers.add(weldingToTesting);
+        buffers.add(testingToPainting);
+        buffers.add(paintingToPacking);
 
         fillBufferWithStocks(endBuffer);
         packing = new ManufactureStep(3, 10, 15, 12, paintingToPacking, endBuffer, null);
@@ -65,19 +75,6 @@ public class Pipeline implements Tickable {
 
         fillBufferWithStocks(cutToBendingBuffer);
         cutter = new ManufactureStep(6, 5, 8, 6, startBuffer, cutToBendingBuffer, bending);
-
-        startBuffer = new Buffer(cutter);
-        cutToBendingBuffer = new Buffer(bending);
-        bendingToWelding = new Buffer(welding);
-        weldingToTesting = new Buffer(testing);
-        testingToPainting = new Buffer(painting);
-        paintingToPacking = new Buffer(packing);
-        buffers.add(startBuffer);
-        buffers.add(cutToBendingBuffer);
-        buffers.add(bendingToWelding);
-        buffers.add(weldingToTesting);
-        buffers.add(testingToPainting);
-        buffers.add(paintingToPacking);
     }
 
     @Override

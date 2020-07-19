@@ -14,7 +14,6 @@ public class SimulatedDate {
     public static void tick() {
         dateTime = dateTime.plusMinutes(1);
         if (dateTime.getHour() == 22){
-            System.out.println("New day: " + dateTime.getDayOfYear());
             dateTime = dateTime.plusDays(1);
             dateTime = dateTime.minusHours(16);
         }

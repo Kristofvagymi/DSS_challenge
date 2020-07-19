@@ -55,7 +55,6 @@ public class Buffer {
         for (Stock stock : stocksInBuffer) {
             fullcount += stock.getCount();
             if (stock.getCount() != stock.getOrder().getTotalCount()) {
-                System.out.println(fullcount);
                 return false;
             }
         }
