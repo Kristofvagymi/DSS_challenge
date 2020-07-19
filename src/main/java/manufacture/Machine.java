@@ -3,7 +3,7 @@ package manufacture;
 import interfaces.Tickable;
 import lombok.*;
 import main.Order;
-import main.OutputWriter;
+import io_handling.OutputWriter;
 import main.SimulatedDate;
 import main.Stock;
 
@@ -77,7 +77,9 @@ public class Machine implements Tickable {
             if(order != null) {
                 // Add the output to the buffer.
                 destinationBuffer.addReadyStock(order);
+                OutputWriter.initWriter("output/worklog.csv");
                 OutputWriter.logWork(name, order.getName(), started, SimulatedDate.getDate());
+                OutputWriter.closeStream();
                 order = null;
             }
 

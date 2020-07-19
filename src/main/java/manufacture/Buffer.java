@@ -2,6 +2,7 @@ package manufacture;
 
 import lombok.Data;
 import main.Order;
+import main.SimulatedDate;
 import main.Stock;
 
 import java.util.ArrayList;
@@ -71,6 +72,9 @@ public class Buffer {
         for (Stock stock : stocksInBuffer) {
             if (stock.getCount() != stock.getOrder().getTotalCount()) {
                 return false;
+            } else {
+                if(stock.getOrder().getEndDate() == null)
+                    stock.getOrder().setEndDate(SimulatedDate.getDate());
             }
         }
         return true;

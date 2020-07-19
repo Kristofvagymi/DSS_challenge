@@ -1,5 +1,7 @@
 package main;
 
+import io_handling.OrderReader;
+import io_handling.OutputWriter;
 import manufacture.Buffer;
 import manufacture.Pipeline;
 
@@ -22,11 +24,17 @@ public class Main {
             pipeline.tick();
             SimulatedDate.tick();
         }
+        OutputWriter.initWriter("output/output.csv");
+        createOutputCsv(orders);
         System.out.println("Finish: " + LocalDateTime.now());
 
-        System.out.println(pipeline.getStartBuffer().getStocksInBuffer().get(0));
-        System.out.println(pipeline.getEndBuffer().getStocksInBuffer().get(0));
         OutputWriter.closeStream();
         System.out.println("Execution finished.");
+    }
+
+    private static void createOutputCsv(List<Order> orders) {
+        for (Order order : orders) {
+            OutputWriter.logOrders(order);
+        }
     }
 }
